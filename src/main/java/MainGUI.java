@@ -31,6 +31,8 @@ public class MainGUI extends JFrame{
 
         settingsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //
+                //
 
             }
         });

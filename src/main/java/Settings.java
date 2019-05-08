@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.*;
+
 
 public class Settings extends JFrame{
     private JPanel settingsPanel;
@@ -8,5 +10,20 @@ public class Settings extends JFrame{
     private JButton submitButton;
     private JButton cancelButton;
 
+    Settings(final MainGUI parentComponent) {
+        setContentPane(settingsPanel);
+        pack();
+        setVisible(true);
+        parentComponent.setEnabled(false);
+
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //TODO call method to submit settings to database
+                parentComponent.setEnabled(true);
+                Settings.this.dispose();
+            }
+        });
+
+    }
 
 }
