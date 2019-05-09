@@ -24,6 +24,14 @@ public class Settings extends JFrame{
             }
         });
 
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parentComponent.setEnabled(true);
+                Settings.this.dispose();
+            }
+        });
+
     }
 
 }

@@ -32,7 +32,9 @@
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <autoCreateRowSorter value="true"/>
+        </properties>
       </component>
       <component id="40a6c" class="javax.swing.JButton" binding="searchButton" default-binding="true">
         <constraints>
