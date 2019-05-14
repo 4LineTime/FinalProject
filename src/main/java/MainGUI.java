@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -28,8 +29,12 @@ public class MainGUI extends JFrame{
         pack();
         setTitle(windowTitle);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        configureTable();
+        configureStatusComboBox();
         setVisible(true);
         setLocationRelativeTo(null);
+
+
 
         exitButton.addActionListener(new ActionListener() {
             @Override
@@ -61,13 +66,60 @@ public class MainGUI extends JFrame{
 
             }
         });
+
+        searchTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchString = searchTextField.getText();
+                searchTable(searchTextField.getText());
+            }
+        });
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchTable(searchTextField.getText());
+            }
+        });
     }
 
     private void configureTable() {
-        //Vector columnNames = db.getColumnNames();
-        //Vector data = db.getRecords();
+        //Put in because IDK
+        recordTable.setGridColor(Color.blue);
 
-        //DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-        //recordTable.setModel(tableModel);
+        //Enable Sorting
+        recordTable.setAutoCreateRowSorter(true);
+
+        Vector columnNames = db.getColumnNames();
+        Vector data = db.getRecords();
+
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        recordTable.setModel(tableModel);
+
+    }
+
+    private void searchTable(String searchText) {
+        //Put in because IDK
+        recordTable.setGridColor(Color.blue);
+
+        //Enable Sorting
+        recordTable.setAutoCreateRowSorter(true);
+
+        Vector columnNames = db.getColumnNames();
+        Vector data = db.searchRecords(searchText);
+
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        recordTable.setModel(tableModel);
+
+    }
+
+
+    private void configureStatusComboBox() {
+        for (String status : InventoryDB.statusList){
+            statusComboBox.addItem(status);
+
+        }
+
+
     }
 }
