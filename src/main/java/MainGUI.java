@@ -32,6 +32,14 @@ public class MainGUI extends JFrame{
     private DefaultTableModel tableModel;
     private Vector columnNames;
 
+    //static variables for button that enables and disables table editing
+    private static boolean tableEditable = true;
+    private static String editableTrueButtonText = "Finish Edit";
+    private static String editableFalseButtonText = "Edit Table ";
+    private static String editableTrueWindowText = " - Editing Enabled";
+    private static String editableFalseWindowText = " - Editing Disabled";
+
+
     MainGUI(InventoryDB db) {
         this.db = db;
 
@@ -41,6 +49,7 @@ public class MainGUI extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         configureTable();
         configureStatusComboBox();
+        enableDisableEditing();
 
         setupDeleteKey();
 
@@ -105,6 +114,29 @@ public class MainGUI extends JFrame{
                 deleteSelectedRecord();
             }
         });
+
+        editingButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enableDisableEditing();
+            }
+        });
+
+        statusComboBox.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateSelectedRecordStatus();
+                updateTable();
+            }
+        }));
+
+        priceChangeTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateSelectedRecordPrice();
+                updateTable();
+            }
+        });
     }
 
     private void configureTable() {
@@ -161,13 +193,49 @@ public class MainGUI extends JFrame{
 
         else {
             // Get the ID of the selected record
-            int id = (Integer) tableModel.getValueAt(currentRow, 7);
+            int id = (Integer) tableModel.getValueAt(currentRow, 6);
             db.deleteRecord(id);
             updateTable();
         }
     }
 
-    private void updateTable() {
+    private void updateSelectedRecordStatus(){
+        int currentRow = recordTable.getSelectedRow();
+        String status = statusComboBox.getSelectedItem().toString();
+
+        if (currentRow == -1) {      // -1 means no row is selected. Display error message.
+            JOptionPane.showMessageDialog(rootPane, "Please choose a record to update");
+        } else {
+            int id  = (Integer) tableModel.getValueAt(currentRow, 6);
+            db.updateStatus(status,id);
+            updateTable();
+        }
+    }
+
+    private void updateSelectedRecordPrice(){
+        int currentRow = recordTable.getSelectedRow();
+        try {
+
+
+            if (currentRow == -1) {      // -1 means no row is selected. Display error message.
+                JOptionPane.showMessageDialog(rootPane, "Please choose a record to update");
+            } else if (priceChangeTextField.getText().isBlank()) {
+                JOptionPane.showMessageDialog(rootPane, "Please enter a valid price.");
+            } else {
+
+                Double price = Double.parseDouble(priceChangeTextField.getText());
+
+                int id = (Integer) tableModel.getValueAt(currentRow, 6);
+                db.updatePrice(price, id);
+                updateTable();
+
+            }
+        } catch(NumberFormatException nfe) {JOptionPane.showMessageDialog(rootPane,"Please enter a valid price.");}
+
+    }
+
+
+    public void updateTable() {
 
         Vector data = db.getRecords();
         tableModel.setDataVector(data, columnNames);
@@ -187,5 +255,22 @@ public class MainGUI extends JFrame{
                 deleteSelectedRecord();
             }
         });
+    }
+
+    private void enableDisableEditing(){
+        if (tableEditable){
+            tableEditable = false;
+            JOptionPane.showMessageDialog(MainGUI.this,"Table Not Editable");
+            editingButton.setText(editableFalseButtonText);
+            setTitle(windowTitle + editableFalseWindowText);
+
+        } else {
+            tableEditable = true;
+            JOptionPane.showMessageDialog(MainGUI.this,"Table Is Editable");
+            editingButton.setText(editableTrueButtonText);
+            setTitle(windowTitle + editableTrueWindowText);
+
+        }
+
     }
 }

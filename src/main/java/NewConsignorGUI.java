@@ -32,6 +32,7 @@ public class NewConsignorGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addNewConsignor();
+                parentComponent.updateTable();
                 parentComponent.setEnabled(true);
                 NewConsignorGUI.this.dispose();
 

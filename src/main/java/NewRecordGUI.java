@@ -41,6 +41,7 @@ public class NewRecordGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addRecord();
+                parentComponent.updateTable();
                 parentComponent.setEnabled(true);
                 NewRecordGUI.this.dispose();
 

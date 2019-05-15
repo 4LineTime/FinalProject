@@ -43,15 +43,21 @@ public class InventoryDB {
     //Queries
     private static final String GET_ALL_RECORDS = "SELECT * FROM Record JOIN Consignor WHERE ConsignorID = CONSIGNOR.ID;";
     private static final String GET_ALL_CONSIGNORS = "SELECT * FROM Consignor;";
-    private static final String GET_ALL_TEST = "SELECT * FROM Record";
+    //private static final String GET_ALL_TEST = "SELECT * FROM Record";
     private static final String SEARCH_ALL_RECORDS = "SELECT * FROM Record INNER JOIN Consignor ON Record.ConsignorID = Consignor.ID WHERE ";
     private static final String DELETE_RECORD = "DELETE FROM Record WHERE ID = ?";
     private static final String ADD_RECORD = "INSERT INTO Record (Price, Artist, Title, ConsignorID) VALUES (?, ?,?,?) ";
+    private static final String UPDATE_STATUS = "UPDATE Record SET Status = ? WHERE ID = ?";
+    private static final String UPDATE_PRICE = "UPDATE Record SET Price = ? WHERE ID = ?";
+
+
+
+
 
     //private static final String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE + " LIKE \'%" + "?"+ "%\' OR " + RECORD_COL_ARTIST+ " LIKE \'%?%\' OR "+ CONSIGNOR_COL_NAME + " LIKE \'%?%\' OR "+ RECORD_COL_STATUS+ " LIKE \'% ? %\'";
-    private static final String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE + " LIKE ? OR " + RECORD_COL_ARTIST+ " LIKE ? OR "+ CONSIGNOR_COL_NAME + " LIKE ? OR "+ RECORD_COL_STATUS+ " LIKE ?";
+    private static final String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE + " LIKE ? OR " + RECORD_COL_ARTIST+ " LIKE ? OR "+ CONSIGNOR_COL_NAME + " LIKE ? OR "+ RECORD_COL_STATUS+ " LIKE ? ESCAPE '!'";
 
-            InventoryDB() {createTables(); getRecords();}
+    InventoryDB() {createTables(); reconcileDatesAndStatus(); getRecords();}
 
     private void createTables(){
 
@@ -159,13 +165,13 @@ public class InventoryDB {
     Vector<Vector> searchRecords(String searchString){
         try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
              PreparedStatement preparedSearch = connection.prepareStatement(concatSearchString)) {
-            String newSearchString = "\'%"+searchString+"%\'";
+
+            String newSearchString = "%"+searchString+"%";
 
             preparedSearch.setString(1, newSearchString);
             preparedSearch.setString(2, newSearchString);
             preparedSearch.setString(3, newSearchString);
             preparedSearch.setString(4, newSearchString);
-            //statement.executeUpdate();
 
             ResultSet rs = preparedSearch.executeQuery();
 
@@ -229,6 +235,38 @@ public class InventoryDB {
         }
     }
 
+    //Update record's sales status
+    public void updateStatus(String status, Integer recordID) {
+
+        try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS)) {
+
+            preparedStatement.setString(1,status);
+            preparedStatement.setInt(2, recordID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Update record's price in database
+    public void updatePrice(Double price, Integer recordID) {
+
+        try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRICE)) {
+
+            preparedStatement.setDouble(1,price);
+            preparedStatement.setInt(2, recordID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    //Creates LinkedHashMap of all Consignors to keep as a record, and to propagate the NewRecordGUI combobox
     LinkedHashMap getConsignors(){
         try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
              Statement statement = connection.createStatement()) {
@@ -259,6 +297,8 @@ public class InventoryDB {
 
         }
 
+
+    //Input new record into database
     public void addToRecordDB(Double price, String artist, String title, int consignorID) {
 
         try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
@@ -275,6 +315,10 @@ public class InventoryDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void reconcileDatesAndStatus(){
+        //TODO This function analyzes existing data in records table of database and uses store settings to automatically change status of each record based on its created and updated by date.
     }
 
 

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3c2267c9-baf4-4e08-b580-136aa110704b" name="Default Changelist" comment="">
+    <list default="true" id="3c2267c9-baf4-4e08-b580-136aa110704b" name="Default Changelist" comment="Search function is now working again with proper implemention of parameter based queries.&#10;Manual status and price updating are working.&#10;Enable Editing Button has been started.&#10;&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;Error handling and data validation is partially enabled&#10;Commenting is partially completed&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/RIMDB.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/databases/RIMDB.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/InventoryDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/InventoryDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MainGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/NewConsignorGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/NewConsignorGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/NewRecordGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/NewRecordGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/MainGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/MainGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Record.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Record.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -41,6 +46,28 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="RIMDB [2]" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="RIMDB [2]" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="RIMDB [2]" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="RIMDB [2]" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
+        <item name="Store: table" type="3d80ac25:SqliteImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
@@ -49,13 +76,83 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ConsignorDB.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="239">
-              <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+              <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/InventoryDB.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-196">
+              <caret line="258" column="40" lean-forward="true" selection-start-line="258" selection-start-column="40" selection-end-line="258" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#createTables#0;class#InventoryDB#0" />
+                <element signature="method#getColumnNames#0;class#InventoryDB#0" />
+                <element signature="method#getRecords#0;class#InventoryDB#0" />
+                <element signature="method#searchRecords#0;class#InventoryDB#0" />
+                <element signature="method#deleteRecord#0;class#InventoryDB#0" />
+                <element signature="method#deleteRecord#1;class#InventoryDB#0" />
+                <element signature="method#getConsignors#0;class#InventoryDB#0" />
+                <element signature="method#addToRecordDB#0;class#InventoryDB#0" />
+                <element signature="method#reconcileDatesAndStatus#0;class#InventoryDB#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="279">
+              <caret line="136" column="30" selection-start-line="136" selection-start-column="30" selection-end-line="136" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1899#1900#0" expanded="true" />
+                <element signature="e#1945#1946#0" expanded="true" />
+                <element signature="class#2089:2323" />
+                <element signature="class#2410:2639" />
+                <element signature="class#2761:2938" />
+                <element signature="e#3295#3296#0" expanded="true" />
+                <element signature="e#3365#3366#0" expanded="true" />
+                <element signature="class#2985:3146" />
+                <element signature="e#3519#3520#0" expanded="true" />
+                <element signature="e#3573#3574#0" expanded="true" />
+                <element signature="e#3728#3729#0" expanded="true" />
+                <element signature="e#3782#3783#0" expanded="true" />
+                <element signature="method#configureTable#0;class#MainGUI#0" />
+                <element signature="method#searchTable#0;class#MainGUI#0" />
+                <element signature="method#configureStatusComboBox#0;class#MainGUI#0" />
+                <element signature="method#updateSelectedRecordStatus#0;class#MainGUI#0" />
+                <element signature="method#setupDeleteKey#0;class#MainGUI#0" />
+                <element signature="e#7497#7662#0" expanded="true" />
+                <element signature="e#7661#7662#0" expanded="true" />
+                <element signature="method#enableDisableEditing#0;class#MainGUI#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/NewRecordGUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-282">
+              <caret line="43" column="46" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.form">
+          <provider selected="true" editor-type-id="ui-designer" />
         </entry>
       </file>
     </leaf>
@@ -89,14 +186,14 @@
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/801fd972-b07f-4687-86e2-4608339aa610/console.sql" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/MainGUI.form" />
         <option value="$PROJECT_DIR$/src/main/java/ConsignorDB.java" />
         <option value="$PROJECT_DIR$/src/main/java/Record.java" />
-        <option value="$PROJECT_DIR$/src/main/java/InventoryDB.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/src/main/java/NewConsignorGUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/NewRecordGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/NewConsignorGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/InventoryDB.java" />
         <option value="$PROJECT_DIR$/src/main/java/MainGUI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MainGUI.form" />
       </list>
     </option>
   </component>
@@ -142,22 +239,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FinalProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FinalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="MainGUI" type="e9f4de52:FormNode" />
-            </path>
-            <path>
-              <item name="FinalProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FinalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="NewConsignorGUI" type="e9f4de52:FormNode" />
             </path>
             <path>
               <item name="FinalProject" type="b2602c69:ProjectViewProjectNode" />
@@ -256,7 +337,7 @@
       <workItem from="1557382223820" duration="526000" />
       <workItem from="1557382763075" duration="605000" />
       <workItem from="1557383431958" duration="25270000" />
-      <workItem from="1557822523954" duration="25586000" />
+      <workItem from="1557822523954" duration="34800000" />
     </task>
     <task id="LOCAL-00001" summary="First Update of Second Hand Record Store Inventory Management System">
       <created>1556761269116</created>
@@ -293,11 +374,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557880611411</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Search function is no longer working after implementing parameter based queries.&#10;New Consignor and New Record are both functioning properly with minimal exception handling.&#10;Database was not added with previous commit, and that issue has been resolved.&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Status Update&#10;Manual Price Update&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation">
+      <created>1557880629342</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1557880629342</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72804000" />
+    <option name="totallyTimeSpent" value="82018000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -311,7 +399,7 @@
       <window_info id="Learn" order="5" weight="0.32955465" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3339254" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3339254" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39964476" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -323,7 +411,7 @@
       <window_info anchor="bottom" id="SQL Generator" order="11" weight="0.3285968" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.3285968" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.3285968" />
+      <window_info active="true" anchor="bottom" id="Messages" order="14" visible="true" weight="0.3285968" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -369,28 +457,17 @@
     <MESSAGE value="Beginning integration with database. Currently getting driver errors when loading database." />
     <MESSAGE value="Updated the search function to search all fields. Can search end or middle of string. &#10;&#10;Still need to implement time based status changes, manual status changes, adding a new consignor, and adding a new record.&#10;&#10;Also need to test on other machines to ensure the presentation goes smooth." />
     <MESSAGE value="Search function is no longer working after implementing parameter based queries.&#10;New Consignor and New Record are both functioning properly with minimal exception handling.&#10;Database was not added with previous commit, and that issue has been resolved.&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Status Update&#10;Manual Price Update&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Search function is no longer working after implementing parameter based queries.&#10;New Consignor and New Record are both functioning properly with minimal exception handling.&#10;Database was not added with previous commit, and that issue has been resolved.&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Status Update&#10;Manual Price Update&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation" />
+    <MESSAGE value="Search function is now working again with proper implemention of parameter based queries.&#10;Manual status and price updating are working.&#10;Enable Editing Button has been started.&#10;&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;Error handling and data validation is partially enabled&#10;Commenting is partially completed&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search function is now working again with proper implemention of parameter based queries.&#10;Manual status and price updating are working.&#10;Enable Editing Button has been started.&#10;&#10;Still needing completion:&#10;Features:&#10;Enable Editing Button&#10;Editable cells in table&#10;Manual Settings Update (Same implementation as New Record)&#10;Database reconciliation with dates and statuses on initial load&#10;Delete Key and Other Hot Keys enabled in child windows&#10;Error handling and data validation is partially enabled&#10;Commenting is partially completed&#10;&#10;Security Issues&#10;Error Handling and Validation Needs to be Robust&#10;Table view render implementation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>89</line>
-          <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>97</line>
+          <line>106</line>
           <properties />
           <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
-          <line>169</line>
-          <properties />
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/NewConsignorGUI.java</url>
@@ -399,58 +476,34 @@
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>165</line>
-          <properties />
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>164</line>
-          <properties />
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>163</line>
-          <properties />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
-          <line>223</line>
+          <line>229</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>155</line>
-          <properties />
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/MainGUI.java</url>
-          <line>157</line>
-          <properties />
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
-          <line>163</line>
-          <properties />
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
-          <line>160</line>
-          <properties />
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/NewRecordGUI.java</url>
-          <line>60</line>
+          <line>61</line>
           <properties />
           <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
+          <line>177</line>
+          <properties />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
+          <line>175</line>
+          <properties />
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/InventoryDB.java</url>
+          <line>173</line>
+          <properties />
+          <option name="timeStamp" value="51" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -583,9 +636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.21.0/sqlite-jdbc-3.21.0.jar!/org/sqlite/core/CorePreparedStatement.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -682,16 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.desktop/javax/swing/AbstractButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="2307" selection-start-line="2307" selection-end-line="2307" />
-          <folding>
-            <element signature="e#83030#83031#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://074f5232-23d4-496e-b647-f638411b999d/schema/main/table/Record">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state projectRestartId="ade6cbae-c892-46bc-903f-9704318894f0">
@@ -711,40 +751,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ConsignorDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="80" column="30" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="239">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/NewConsignorGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="45" column="56" lean-forward="true" selection-start-line="45" selection-start-column="56" selection-end-line="45" selection-end-column="56" />
+        <state relative-caret-position="109">
+          <caret line="43" column="17" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/NewRecordGUI.java">
+    <entry file="jar://C:/Program Files/Java/jdk-11.0.2/lib/src.zip!/java.desktop/javax/swing/AbstractButton.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="116">
+          <caret line="284" column="18" selection-start-line="284" selection-start-column="18" selection-end-line="284" selection-end-column="18" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#10125#10126#0" expanded="true" />
+            <element signature="e#10152#10153#0" expanded="true" />
+            <element signature="e#82980#82981#0" expanded="true" />
+            <element signature="e#83030#83031#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/InventoryDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="267" column="40" selection-start-line="267" selection-start-column="40" selection-end-line="267" selection-end-column="40" />
+        <state relative-caret-position="-196">
+          <caret line="258" column="40" lean-forward="true" selection-start-line="258" selection-start-column="40" selection-end-line="258" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#createTables#0;class#InventoryDB#0" />
@@ -752,17 +792,56 @@
             <element signature="method#getRecords#0;class#InventoryDB#0" />
             <element signature="method#searchRecords#0;class#InventoryDB#0" />
             <element signature="method#deleteRecord#0;class#InventoryDB#0" />
+            <element signature="method#deleteRecord#1;class#InventoryDB#0" />
             <element signature="method#getConsignors#0;class#InventoryDB#0" />
+            <element signature="method#addToRecordDB#0;class#InventoryDB#0" />
+            <element signature="method#reconcileDatesAndStatus#0;class#InventoryDB#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ConsignorDB.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/NewRecordGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+        <state relative-caret-position="-282">
+          <caret line="43" column="46" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="136" column="30" selection-start-line="136" selection-start-column="30" selection-end-line="136" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1899#1900#0" expanded="true" />
+            <element signature="e#1945#1946#0" expanded="true" />
+            <element signature="class#2089:2323" />
+            <element signature="class#2410:2639" />
+            <element signature="class#2761:2938" />
+            <element signature="e#3295#3296#0" expanded="true" />
+            <element signature="e#3365#3366#0" expanded="true" />
+            <element signature="class#2985:3146" />
+            <element signature="e#3519#3520#0" expanded="true" />
+            <element signature="e#3573#3574#0" expanded="true" />
+            <element signature="e#3728#3729#0" expanded="true" />
+            <element signature="e#3782#3783#0" expanded="true" />
+            <element signature="method#configureTable#0;class#MainGUI#0" />
+            <element signature="method#searchTable#0;class#MainGUI#0" />
+            <element signature="method#configureStatusComboBox#0;class#MainGUI#0" />
+            <element signature="method#updateSelectedRecordStatus#0;class#MainGUI#0" />
+            <element signature="method#setupDeleteKey#0;class#MainGUI#0" />
+            <element signature="e#7497#7662#0" expanded="true" />
+            <element signature="e#7661#7662#0" expanded="true" />
+            <element signature="method#enableDisableEditing#0;class#MainGUI#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/MainGUI.form">
+      <provider selected="true" editor-type-id="ui-designer" />
     </entry>
   </component>
   <component name="masterDetails">
