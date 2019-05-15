@@ -1,10 +1,10 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.Vector;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 //refers to https://github.com/claraj/Java2545Examples/
@@ -25,6 +25,7 @@ public class MainGUI extends JFrame{
     private JTextField priceChangeTextField;
     private JButton deleteButton;
     private String windowTitle = "Used Record Inventory Management";
+    private String priceChangerText = "Change Price";
 
     //Operation variables
     private InventoryDB db;
@@ -47,11 +48,11 @@ public class MainGUI extends JFrame{
         pack();
         setTitle(windowTitle);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        configureTable();
-        configureStatusComboBox();
-        enableDisableEditing();
+        configureTable(); //Propagate table UI by accessing the database and then turning that into a vector then using vector to fill table view
+        configureStatusComboBox(); // Propagate combo box using a list set in InventoryDB
+        enableDisableEditing(); //Doesn't currently work. Is supposed to automatically enable or disable certain columns' editability, as well as act as a save function, and prevent user errors.
 
-        setupDeleteKey();
+        setupDeleteKey();//Doesn't work. Is supposed to allow pressing the delete keyboard key to delete a row.
 
         setVisible(true);
 
@@ -65,7 +66,7 @@ public class MainGUI extends JFrame{
                 System.exit(0);
             }
         });
-
+        //UI Element completed but does not interact with the settings table or business logic layer.
         settingsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //
@@ -75,6 +76,7 @@ public class MainGUI extends JFrame{
             }
         });
 
+        //New window to add consignor to Consignor table
         newCustomerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +85,7 @@ public class MainGUI extends JFrame{
             }
         });
 
+        //New window to add record to Record table
         newRecordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -91,14 +94,8 @@ public class MainGUI extends JFrame{
             }
         });
 
-        //searches all text in table
-        searchTextField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String searchString = searchTextField.getText();
-                searchTable(searchString);
-            }
-        });
+
+
 
         //Search button duplicates the text field action listener function
         searchButton.addActionListener(new ActionListener() {
@@ -108,6 +105,25 @@ public class MainGUI extends JFrame{
             }
         });
 
+        //searches all text in table within each column that is text datatype
+        searchTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchTable(searchTextField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchTable(searchTextField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchTable(searchTextField.getText());
+            }
+        });
+
+        //Deletes Row
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -115,13 +131,14 @@ public class MainGUI extends JFrame{
             }
         });
 
+        //Does not work. Is meant to enable or disable the editibility of the table, as well as function as a save.
         editingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 enableDisableEditing();
             }
         });
-
+        //Change sale status of record row
         statusComboBox.addActionListener((new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -130,13 +147,32 @@ public class MainGUI extends JFrame{
             }
         }));
 
+
+        //Change price of row
         priceChangeTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 updateSelectedRecordPrice();
                 updateTable();
             }
         });
+
+
+        //Remove label when editing, and add back in when done.
+        priceChangeTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                priceChangeTextField.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                priceChangeTextField.setText(priceChangerText);
+            }
+        });
+
+
     }
 
     private void configureTable() {
@@ -159,10 +195,7 @@ public class MainGUI extends JFrame{
     }
 
     private void searchTable(String searchText) {
-        //Put in because IDK
-        //recordTable.setGridColor(Color.blue);
-
-        //Enable Sorting
+                //Enable Sorting
         recordTable.setAutoCreateRowSorter(true);
 
         columnNames = db.getColumnNames();
@@ -201,7 +234,7 @@ public class MainGUI extends JFrame{
 
     private void updateSelectedRecordStatus(){
         int currentRow = recordTable.getSelectedRow();
-        String status = statusComboBox.getSelectedItem().toString();
+        String status = statusComboBox.getSelectedItem().toString(); //Needs to be converted to string or is seen as Object datatype
 
         if (currentRow == -1) {      // -1 means no row is selected. Display error message.
             JOptionPane.showMessageDialog(rootPane, "Please choose a record to update");
@@ -215,11 +248,9 @@ public class MainGUI extends JFrame{
     private void updateSelectedRecordPrice(){
         int currentRow = recordTable.getSelectedRow();
         try {
-
-
             if (currentRow == -1) {      // -1 means no row is selected. Display error message.
                 JOptionPane.showMessageDialog(rootPane, "Please choose a record to update");
-            } else if (priceChangeTextField.getText().isBlank()) {
+            } else if (priceChangeTextField.getText().isBlank()) { //Text field is blank
                 JOptionPane.showMessageDialog(rootPane, "Please enter a valid price.");
             } else {
 
@@ -230,7 +261,7 @@ public class MainGUI extends JFrame{
                 updateTable();
 
             }
-        } catch(NumberFormatException nfe) {JOptionPane.showMessageDialog(rootPane,"Please enter a valid price.");}
+        } catch(NumberFormatException nfe) {JOptionPane.showMessageDialog(rootPane,"Please enter a valid price.");} //If invalid or unparseable data, or if null.
 
     }
 
@@ -242,6 +273,7 @@ public class MainGUI extends JFrame{
 
     }
 
+    //Not functioning at this time. To enable keyboard key delete to delete a row.
     private void setupDeleteKey(){
         //based on https://stackoverflow.com/questions/6462842/how-to-remove-a-row-in-jtable-via-pressing-on-delete-on-the-keyboard solution 2
         int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
@@ -257,8 +289,9 @@ public class MainGUI extends JFrame{
         });
     }
 
+    //Does not yet work. Is meant to enable and disable editability of table, as well as act as a save function.
     private void enableDisableEditing(){
-        if (tableEditable){
+        if (tableEditable){ //boolean set as private static
             tableEditable = false;
             JOptionPane.showMessageDialog(MainGUI.this,"Table Not Editable");
             editingButton.setText(editableFalseButtonText);

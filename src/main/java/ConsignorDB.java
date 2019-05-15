@@ -15,6 +15,7 @@ public class ConsignorDB {
 
     ConsignorDB() {}
 
+    //Add consignor to database
     public void addConsignor(String name, String contact) {
 
         try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
