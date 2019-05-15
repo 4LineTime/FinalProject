@@ -9,11 +9,16 @@ public class NewConsignorGUI extends JFrame {
     private JButton submitButton;
     private JPanel newConsignorPanel;
 
-    NewConsignorGUI(final MainGUI parentComponent){
+    private ConsignorDB cdb = new ConsignorDB();
+
+    NewConsignorGUI(InventoryDB db, final MainGUI parentComponent){
         setContentPane(newConsignorPanel);
         pack();
         setVisible(true);
         parentComponent.setEnabled(false);
+
+
+
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -26,10 +31,21 @@ public class NewConsignorGUI extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                addNewConsignor();
                 parentComponent.setEnabled(true);
                 NewConsignorGUI.this.dispose();
 
             }
         });
+
+
+    }
+    private void addNewConsignor(){
+        try {
+            String name = nameTextField.getText();
+            String contact = contactTextField.getText();
+            cdb.addConsignor(name, contact);
+        } catch (Exception e) {JOptionPane.showMessageDialog(NewConsignorGUI.this, "Error: Please Enter the Correct Data\n"+e);}
+
     }
 }

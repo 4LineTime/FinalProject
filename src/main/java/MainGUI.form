@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainGUI">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="4" vgap="4">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="4" vgap="4">
     <margin top="4" left="4" bottom="4" right="4"/>
     <constraints>
-      <xy x="20" y="20" width="628" height="400"/>
+      <xy x="20" y="20" width="647" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -20,7 +20,7 @@
       </component>
       <scrollpane id="b3e9c">
         <constraints>
-          <grid row="1" column="0" row-span="3" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="3" col-span="5" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="800" height="200"/>
           </grid>
         </constraints>
@@ -35,36 +35,12 @@
           </component>
         </children>
       </scrollpane>
-      <component id="164c6" class="javax.swing.JButton" binding="settingsButton" default-binding="true">
-        <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="&amp;Settings"/>
-        </properties>
-      </component>
-      <component id="d4a65" class="javax.swing.JButton" binding="newCustomerButton" default-binding="true">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="New &amp;Customer"/>
-        </properties>
-      </component>
-      <component id="bfbed" class="javax.swing.JButton" binding="exitButton">
-        <constraints>
-          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="E&amp;xit"/>
-        </properties>
-      </component>
       <component id="40a6c" class="javax.swing.JButton" binding="searchButton" default-binding="true">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <enabled value="false"/>
+          <enabled value="true"/>
           <text value="&amp;Search"/>
         </properties>
       </component>
@@ -74,12 +50,62 @@
         </constraints>
         <properties/>
       </component>
+      <component id="8bb4d" class="javax.swing.JButton" binding="editingButton">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Enable Editing"/>
+        </properties>
+      </component>
+      <component id="5a01b" class="javax.swing.JTextField" binding="priceChangeTextField">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Change Price"/>
+        </properties>
+      </component>
+      <component id="bfbed" class="javax.swing.JButton" binding="exitButton">
+        <constraints>
+          <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="E&amp;xit"/>
+        </properties>
+      </component>
+      <component id="164c6" class="javax.swing.JButton" binding="settingsButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&amp;Settings"/>
+        </properties>
+      </component>
+      <component id="d4a65" class="javax.swing.JButton" binding="newCustomerButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="New &amp;Customer"/>
+        </properties>
+      </component>
       <component id="8f03e" class="javax.swing.JButton" binding="newRecordButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="New &amp;Record"/>
+        </properties>
+      </component>
+      <component id="7a903" class="javax.swing.JButton" binding="deleteButton">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="New &amp;Record"/>
+          <text value="&amp;Delete Record"/>
         </properties>
       </component>
     </children>

@@ -1,7 +1,6 @@
 import java.sql.*;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Vector;
 
 public class InventoryDB {
 
@@ -32,6 +31,9 @@ public class InventoryDB {
 
     static final String OK = "Ok";
 
+    private static final String defaultStatus = "Standard";
+
+
     //SQL statements
     //Table creation sql
     private static final String CREATE_CONSIGNOR_TABLE = "CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT)";
@@ -40,11 +42,16 @@ public class InventoryDB {
             "%s       REAL  default 10.00 not null, %s TEXT  not null, %s  TEXT  not null, %s INTEGER  default 0 not null references %s)";
     //Queries
     private static final String GET_ALL_RECORDS = "SELECT * FROM Record JOIN Consignor WHERE ConsignorID = CONSIGNOR.ID;";
+    private static final String GET_ALL_CONSIGNORS = "SELECT * FROM Consignor;";
     private static final String GET_ALL_TEST = "SELECT * FROM Record";
     private static final String SEARCH_ALL_RECORDS = "SELECT * FROM Record INNER JOIN Consignor ON Record.ConsignorID = Consignor.ID WHERE ";
+    private static final String DELETE_RECORD = "DELETE FROM Record WHERE ID = ?";
+    private static final String ADD_RECORD = "INSERT INTO Record (Price, Artist, Title, ConsignorID) VALUES (?, ?,?,?) ";
 
+    //private static final String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE + " LIKE \'%" + "?"+ "%\' OR " + RECORD_COL_ARTIST+ " LIKE \'%?%\' OR "+ CONSIGNOR_COL_NAME + " LIKE \'%?%\' OR "+ RECORD_COL_STATUS+ " LIKE \'% ? %\'";
+    private static final String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE + " LIKE ? OR " + RECORD_COL_ARTIST+ " LIKE ? OR "+ CONSIGNOR_COL_NAME + " LIKE ? OR "+ RECORD_COL_STATUS+ " LIKE ?";
 
-    InventoryDB() {createTables(); getRecords();createStatusMap();}
+            InventoryDB() {createTables(); getRecords();}
 
     private void createTables(){
 
@@ -83,6 +90,8 @@ public class InventoryDB {
         columnNames.add(RECORD_COL_STATUS);
         columnNames.add(CONSIGNOR_COL_NAME);
         columnNames.add(CONSIGNOR_COL_CONTACT);
+        columnNames.add(RECORD_COL_ID);
+        columnNames.add(RECORD_COL_CONSIGNOR);
 
 //        columnNames.add("Title");
 //        columnNames.add("Artist");
@@ -106,7 +115,7 @@ public class InventoryDB {
             String artist, title, name, contact,priceString,status, statusString;
             Date created, updated; //date
             double price;
-            int consignorid; //int
+            int recordID, consignorID; //int
 
             while (rs.next()) {
 
@@ -125,6 +134,9 @@ public class InventoryDB {
                 name = rs.getString(CONSIGNOR_COL_NAME);
                 contact = rs.getString(CONSIGNOR_COL_CONTACT);
 
+                recordID = rs.getInt(RECORD_COL_ID);
+                consignorID = rs.getInt(RECORD_COL_CONSIGNOR);
+
 
 
 
@@ -132,7 +144,7 @@ public class InventoryDB {
 //                status = rs.getString(Record.getStatus(RECORD_COL_STATUS));
 
                 Vector v = new Vector();
-                v.add(title); v.add(artist); v.add(priceString); v.add(status); v.add(name); v.add(contact);
+                v.add(title); v.add(artist); v.add(priceString); v.add(status); v.add(name); v.add(contact); v.add(recordID); v.add(consignorID);
 
                 recordsVector.add(v);
             }
@@ -146,19 +158,23 @@ public class InventoryDB {
 
     Vector<Vector> searchRecords(String searchString){
         try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
-             Statement statement = connection.createStatement()) {
+             PreparedStatement preparedSearch = connection.prepareStatement(concatSearchString)) {
+            String newSearchString = "\'%"+searchString+"%\'";
 
-            //Concatenated search string
-            String concatSearchString = SEARCH_ALL_RECORDS + RECORD_COL_TITLE+ " LIKE \'%" + searchString+ "%\' OR " + RECORD_COL_ARTIST+ " LIKE \'%" + searchString+"%\' OR "+ CONSIGNOR_COL_NAME + " LIKE \'%" + searchString+"%\' OR "+ RECORD_COL_STATUS+ " LIKE \'%" + searchString+"%\'";
+            preparedSearch.setString(1, newSearchString);
+            preparedSearch.setString(2, newSearchString);
+            preparedSearch.setString(3, newSearchString);
+            preparedSearch.setString(4, newSearchString);
+            //statement.executeUpdate();
 
-            ResultSet rs = statement.executeQuery(concatSearchString);
+            ResultSet rs = preparedSearch.executeQuery();
 
             Vector<Vector> recordsVector = new Vector<>();
 
-            String artist, title, name, contact,priceString, status, statusString;
-            Date created, updated; //date
+            String artist, title, name, contact,priceString, status;
+            //Date created, updated; //date
             double price;
-            int consignorid; //int
+            int recordID, consignorID; //int
 
             while (rs.next()) {
 
@@ -177,14 +193,15 @@ public class InventoryDB {
                 name = rs.getString(CONSIGNOR_COL_NAME);
                 contact = rs.getString(CONSIGNOR_COL_CONTACT);
 
-
+                recordID = rs.getInt(RECORD_COL_ID);
+                consignorID = rs.getInt(RECORD_COL_CONSIGNOR);
 
 
 //                price = rs.getString(Record.parsePrice(RECORD_COL_PRICE));
 //                status = rs.getString(Record.getStatus(RECORD_COL_STATUS));
 
                 Vector v = new Vector();
-                v.add(title); v.add(artist); v.add(priceString); v.add(status); v.add(name); v.add(contact);
+                v.add(title); v.add(artist); v.add(priceString); v.add(status); v.add(name); v.add(contact); v.add(recordID); v.add(consignorID);;
 
                 recordsVector.add(v);
             }
@@ -198,18 +215,65 @@ public class InventoryDB {
 
     }
 
-    public static String getStatus(Integer statusInt){
-        return statusMap.get(statusInt);
+    //Deletes record from database
+    public void deleteRecord(Integer recordID) {
 
+        try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_RECORD)) {
 
+            preparedStatement.setInt(1, recordID);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void createStatusMap(){
-        int i =0;
-        for(String status : statusList){
-            statusMap.put(i,status);
-            i++;
+    LinkedHashMap getConsignors(){
+        try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
+             Statement statement = connection.createStatement()) {
 
+            ResultSet rs = statement.executeQuery(GET_ALL_CONSIGNORS);
+
+            int consignorID;
+            String name, contact;
+
+            LinkedHashMap consignorsMap = new LinkedHashMap();
+
+            while(rs.next()) {
+                consignorID = rs.getInt(CONSIGNOR_COL_ID);
+                name = rs.getString(CONSIGNOR_COL_NAME);
+                //contact = rs.getString(CONSIGNOR_COL_CONTACT); //not used currently
+
+                consignorsMap.put(name,consignorID);
+
+
+            }
+
+
+            return consignorsMap;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        }
+
+    public void addToRecordDB(Double price, String artist, String title, int consignorID) {
+
+        try (Connection connection = DriverManager.getConnection(DB_CONNECTION_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_RECORD)) {
+
+
+            preparedStatement.setDouble(1, price);
+            preparedStatement.setString(2, artist);
+            preparedStatement.setString(3, title);
+            preparedStatement.setInt(4, consignorID);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
